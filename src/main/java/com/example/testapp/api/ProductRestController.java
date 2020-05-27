@@ -17,10 +17,6 @@ public class ProductRestController {
         this.productService = productService;
     }
 
-    @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
-    }
 
     @GetMapping("/{id}")
     public Product showNewProductPage(@PathVariable Long id) {
