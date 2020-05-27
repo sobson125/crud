@@ -41,7 +41,7 @@ public class ProductController {
     @GetMapping("/edit/{id}")
     public ModelAndView editProduct(@PathVariable(name = "id") Long id) {
         ModelAndView modelAndView = new ModelAndView("edit");
-        Product product = productService.get(id);
+        Product product = productService.getById(id);
         modelAndView.addObject("product", product);
 
         return modelAndView;

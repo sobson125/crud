@@ -4,9 +4,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class ProductService {
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -20,7 +22,7 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public Product get(Long id) {
+    public Product getById(Long id) {
         return productRepository.findById(id).get();
     }
 
@@ -29,4 +31,22 @@ public class ProductService {
     }
 
 
+    public List<Product> getAllProductsByQuery(String query) {
+        return productRepository.findAll()
+                .stream()
+                .filter(product -> product.getBrand().contains(query) ||
+                        product.getName().contains(query)
+                )
+                .collect(toList());
+    }
+
+    public Product updateProduct(Long id,Product product) {
+        Product byId = getById(id);
+        byId.setPrice(product.getPrice());
+        byId.setName(product.getName());
+        byId.setQuantity(product.getQuantity());
+        byId.setBrand(product.getBrand());
+        productRepository.save(byId);
+        return byId;
+    }
 }
