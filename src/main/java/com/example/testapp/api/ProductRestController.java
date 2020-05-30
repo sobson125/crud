@@ -24,9 +24,8 @@ public class ProductRestController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts(@RequestParam Optional<String> query) {
-        return new ArrayList<>(query.map(productService::getAllProductsByQuery)
-                .orElseGet(productService::getAllProducts));
+    public List<Product> getAllProducts(@RequestParam(value = "query", required = false) String query) {
+        return productService.getAllProductsByQuery(query);
     }
 
 

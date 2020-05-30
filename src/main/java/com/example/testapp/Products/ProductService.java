@@ -1,5 +1,6 @@
 package com.example.testapp.Products;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,18 +9,17 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 public class ProductService {
-    private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    @Autowired
+    private ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    public void save(Product product) {
+    public Product save(Product product) {
         productRepository.save(product);
+        return product;
     }
 
     public Product getById(Long id) {
@@ -32,6 +32,10 @@ public class ProductService {
 
 
     public List<Product> getAllProductsByQuery(String query) {
+        if (query == null) {
+            return getAllProducts();
+        }
+
         return productRepository.findAll()
                 .stream()
                 .filter(product -> product.getBrand().contains(query) ||

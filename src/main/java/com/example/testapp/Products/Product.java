@@ -16,6 +16,14 @@ public class Product {
     public Product() {
     }
 
+    public Product(Long id, String name, String brand, Integer quantity, Float price) {
+        this.id = id;
+        this.name = name;
+        this.brand = brand;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }
